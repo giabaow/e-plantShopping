@@ -52,8 +52,8 @@ This project is deployed using GitHub Pages. The live app can be accessed at:
 
 Below are demo screenshots of the app. To replace these with your real screenshots, add your image files to the `assets/demo/` folder (for example `assets/demo/screenshot1.png`) and commit them. The README will automatically show the images using the relative paths.
 
-![Demo Screenshot 1](assets/demo/screenshot1.svg)
+![Demo Screenshot 1](assets/demo/screenshot1.png)
 
-![Demo Screenshot 2](assets/demo/screenshot2.svg)
+![Demo Screenshot 2](assets/demo/screenshot2.png)
 
-![Demo Screenshot 3](assets/demo/screenshot3.svg)
+![Demo Screenshot 3](assets/demo/screenshot3.png)
