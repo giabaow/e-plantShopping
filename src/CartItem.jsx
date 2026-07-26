@@ -1,35 +1,55 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
+const CartItem = ({ onContinueShopping = () => {} }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let total = 0;
+
+    cart.forEach((item) => {
+      const quantity = item.quantity || 1;
+      const price = parseFloat(item.cost.substring(1));
+      total += price * quantity;
+    });
+
+    return total.toFixed(2);
   };
 
   const handleContinueShopping = (e) => {
-   
+    e.preventDefault();
+    onContinueShopping(e);
   };
 
-
+  const handleCheckoutShopping = (e) => {
+    e.preventDefault();
+    alert('Functionality to be added for future reference');
+  };
 
   const handleIncrement = (item) => {
+    dispatch({ type: 'cart/updateQuantity', payload: { name: item.name, quantity: item.quantity + 1 } });
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+      dispatch({ type: 'cart/updateQuantity', payload: { name: item.name, quantity: item.quantity - 1 } });
+    } else {
+      dispatch({ type: 'cart/removeItem', payload: { name: item.name } });
+    }
   };
 
   const handleRemove = (item) => {
+    dispatch({ type: 'cart/removeItem', payload: { name: item.name } });
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const quantity = item.quantity || 1;
+    const price = parseFloat(item.cost.substring(1));
+    return (price * quantity).toFixed(2);
   };
 
   return (
@@ -57,10 +77,14 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
       </div>
     </div>
   );
+};
+
+CartItem.propTypes = {
+  onContinueShopping: PropTypes.func,
 };
 
 export default CartItem;
